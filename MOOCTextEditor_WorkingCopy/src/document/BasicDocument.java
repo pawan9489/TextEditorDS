@@ -34,9 +34,10 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-		//TODO: Implement this method in week 2 according to the comments above.  
+		//TODO: Implement this method in week 2 according to the comments above.
+		List<String> tokens = super.getTokens("[a-zA-Z]+");
 		// See the Module 2 support videos if you need help.
-	    return 0;
+	    return tokens.size();
 	}
 	
 	/**
@@ -54,9 +55,10 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 2 support videos 
+	    //TODO: Implement this method.  See the Module 2 support videos
+		List<String> tokens = super.getTokens("[^!?.]+");
         // if you need help.
-        return 0;
+        return tokens.size();
 	}
 	
 	/**
@@ -76,17 +78,29 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSyllables()
 	{
-	    //TODO: Implement this method in week 2.  See the Module 2 support videos 
+	    //TODO: Implement this method in week 2.  See the Module 2 support videos
+		List<String> tokens = super.getTokens("[a-zA-Z]+");
+		int syllabel_count = 0;
+		for(String x: tokens) {
+			syllabel_count += super.countSyllables(x);
+		}
         // if you need help.  And note that there is no need to use a regular
 		// expression for the syllable counting.  We recommend you implement 
 		// the helper function countSyllables in Document.java using a loop, 
 		// and then call it here on each word.
-        return 0;
+        return syllabel_count;
 	}
-	
-	
-	/* The main method for testing this class. 
-	 * You are encouraged to add your own tests.  */
+
+
+	@Override
+	public double getFleschScore() {
+		double result = 0;
+		result = 206.835 - 1.015 * (getNumWords() * 1.0 / getNumSentences()) - 84.6 * (getNumSyllables() * 1.0 / getNumWords());
+		return result;
+	}
+
+	/* The main method for testing this class.
+         * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
 	{
 		/* Each of the test cases below uses the method testCase.  The first 
